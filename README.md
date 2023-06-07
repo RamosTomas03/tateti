@@ -12,4 +12,4 @@ Universidad Nacional del Comahue
 ## Integrantes del equipo
 
 - **Tomás Nahum Ramos** - Legajo: FAI 4257 - Mail: tomyram26@gmail.com - usuario github: RamosTomas03
-- **Tomás Sanchez** - Legajo: - Mail: - usuario github: TSanchez00
+- **Tomás Sanchez** - Legajo:FAI 4396 - Mail:sancheznqn97@gmai.com - usuario github: TSanchez00
