@@ -16,7 +16,7 @@ include_once("tateti.php");
 /***** DEFINICION DE FUNCIONES ********/
 /**************************************/
 
-/* Funcion que muestra colecciones de juegos
+/* 
 
 
 
