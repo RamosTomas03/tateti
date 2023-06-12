@@ -63,16 +63,28 @@ function seleccionarOpcion(){
 */
 
 /** Funcion que muestra en pantalla datos de un juego solicitado por el usuario.
- * 
+ * @param array $coleccionJuegos
+ * @param int $nroJuego
 */
-    function datosDeUnJuego (){
-    /* */
-    $coleccionJuegos = 
-    $nroUsuario = trim(fgets(STDIN));
-    /*$nroUsuario = solicitarNumeroEntre(-1, count($coleccionJuegos));*/
-    if($coleccionJuegos[$nroUsuario]["puntosCruz"] > $coleccionJuegos[$nroUsuario]["puntosCirculos"]){
+    function datosDeUnJuego ($coleccionJuegos, $nroJuego){
+    /* array $juegoElegido */
+    $nroJuego = solicitarNumeroEntre(-1, count($coleccionJuegos));
+    $juegoElegido=$coleccionJuegos[$nroJuego-1];
+    echo "**********************\n";
+    if($juegoElegido["puntosCruz"] > $juegoElegido["puntosCirculo"]){
+        echo "Juego TATETI: ", $nroJuego, "(gano X)\n";
+        echo "Jugador X: ", $juegoElegido["jugadorCruz"]," obtuvo ", $juegoElegido["puntosCruz"], " puntos\n";
+        echo "Jugador O: ", $juegoElegido["jugadorCirculo"], " obtuvo ", $juegoElegido["puntosCirculo"], " puntos\n";
+    }elseif ($juegoElegido["puntosCruz"] < $juegoElegido["puntosCirculo"]){
+        echo "Juego TATETI: ", $nroJuego, "(gano O)\n";
+        echo "Jugador X: ", $juegoElegido["jugadorCruz"]," obtuvo ", $juegoElegido["puntosCruz"], " puntos\n";
+        echo "Jugador O: ", $juegoElegido["jugadorCirculo"], " obtuvo ", $juegoElegido["puntosCirculo"], " puntos\n";
+    }else {
+        echo "Juego TATETI: ", $nroJuego, "(empate)\n";
+        echo "Jugador X: ", $juegoElegido["jugadorCruz"]," obtuvo ", $juegoElegido["puntosCruz"], " puntos\n";
+        echo "Jugador O: ", $juegoElegido["jugadorCirculo"], " obtuvo ", $juegoElegido["puntosCirculo"], " puntos\n";
     }
-
+    echo "**********************\n";
     }
 
 /**************************************/
