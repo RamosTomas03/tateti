@@ -66,7 +66,7 @@ function seleccionarOpcion(){
  * @param array $coleccionJuegos
  * @param int $nroJuego
 */
-    function datosDeUnJuego ($coleccionJuegos, $nroJuego){
+function datosDeUnJuego ($coleccionJuegos, $nroJuego){
     /* array $juegoElegido */
     $nroJuego = solicitarNumeroEntre(-1, count($coleccionJuegos));
     $juegoElegido=$coleccionJuegos[$nroJuego-1];
@@ -85,9 +85,18 @@ function seleccionarOpcion(){
         echo "Jugador O: ", $juegoElegido["jugadorCirculo"], " obtuvo ", $juegoElegido["puntosCirculo"], " puntos\n";
     }
     echo "**********************\n";
-    }
+}
 
-    /** */
+/** Funcion que agrega un nuevo juego a la coleccion de juegos.
+ * @param array $coleccionJuegos
+ * @param array $nuevoJuego
+ * @return array
+*/
+function agregarJuego ($coleccionJuego, $nuevoJuego){
+    array_push($coleccionJuego, $nuevoJuego);
+    return $coleccionJuego;
+}
+
 
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
