@@ -98,6 +98,35 @@ function agregarJuego ($coleccionJuego, $nuevoJuego){
 }
 
 
+/** Funcion que busca el primer juego ganado por un determinado jugador
+ * @param array $coleccionJuegos
+ * @param array $jugador
+ * @param @return int
+*/
+function buscarJuegoGanado($coleccionJuegos, $jugador) {
+    /**int $indice
+     * int $totalJuegos
+     * int $juegoGanado
+     * array $juego
+     */
+    $indice = 0;
+    $totalJuegos = count($coleccionJuegos);
+    $juegoGanado = -1;
+    
+    while ($indice <= $totalJuegos) {
+        $juego = $coleccionJuegos[$indice];
+        
+        if (($juego["jugadorCruz"] == $jugador && $juego["puntosCruz"] > $juego["puntosCirculo"]) ||
+            ($juego["jugadorCirculo"] == $jugador && $juego["puntosCirculo"] > $juego["puntosCruz"])) {
+            $juegoGanado = $indice;
+        }
+        
+        $indice+1;
+    }
+    
+    return $juegoGanado;
+}
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
