@@ -101,7 +101,7 @@ function agregarJuego ($coleccionJuego, $nuevoJuego){
 /** Funcion que busca el primer juego ganado por un determinado jugador
  * @param array $coleccionJuegos
  * @param array $jugador
- * @param @return int
+ * @return int
 */
 function buscarJuegoGanado($coleccionJuegos, $jugador) {
     /**int $indice
