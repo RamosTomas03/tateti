@@ -92,9 +92,22 @@ function datosDeUnJuego ($coleccionJuegos, $nroJuego){
  * @param array $nuevoJuego
  * @return array
 */
-function agregarJuego ($coleccionJuego, $nuevoJuego){
-    array_push($coleccionJuego, $nuevoJuego);
-    return $coleccionJuego;
+function agregarJuego ($coleccionJuegos, $nuevoJuego){
+    array_push($coleccionJuegos, $nuevoJuego);
+    return $coleccionJuegos;
+}
+/** Funcion que dada una coleccion de juegos y el nombre del jugador retorna el indice del primer juego ganado por dicho jugador.
+ * @param array $coleccionJuegos
+ * @param string $nombreJugador
+ * @return int
+ */
+function indicePrimerJuegoGanado ($coleccionJuegos, $nombreJugador){
+    // int $i, $contIndices
+    $i = 0;
+    $contIndices = count($coleccionJuegos);
+    while ($i < $contIndices && $coleccionJuegos[$i]["jugadorCruz"]=$nombreJugador || $coleccionJuegos[$i]["jugadorCirculo"]=$nombreJugador) {
+        # code...
+    }
 }
 
 
