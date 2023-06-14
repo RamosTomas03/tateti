@@ -103,9 +103,7 @@ function agregarJuego ($coleccionJuegos, $nuevoJuego){
  * @return int
 */
 function buscarJuegoGanado($coleccionJuegos, $jugador) {
-    /**int $indice
-     * int $totalJuegos
-     * int $juegoGanado
+    /* int $indice, $totalJuegos, $juegoGanado
      * array $juego
      */
     $indice = 0;
@@ -124,6 +122,45 @@ function buscarJuegoGanado($coleccionJuegos, $jugador) {
     }
     
     return $juegoGanado;
+}
+
+/** Funcion que muestra el resumen de un jugador.
+ * @param array $coleccionJuegos
+ * @param string $jugador
+ * @return array
+ */
+function resumenJugador($coleccionJuegos, $jugador){
+    /* array $datosJugador
+    * int $juegosGanados, $juegosPerdidos, $juegosEmpatados, $puntosAcum, $indice, $totalJuegos */
+    $datosJugador = [];
+    $juegosGanados = 0;
+    $juegosPerdidos = 0;
+    $juegosEmpatados = 0;
+    $puntosAcum = 0;
+    $indice = 0;
+    $totalJuegos = count($coleccionJuegos);
+    for ($indice = 0; $indice < $totalJuegos ; $indice++) { 
+        $juego = $coleccionJuegos[$indice];
+        if ($juego["jugadorCruz"] == $jugador && $juego["puntosCruz"] > $juego["puntosCirculo"]){
+            $juegosGanados = $juegosGanados + 1;
+            $puntosAcum = $puntosAcum + $juego["puntosCruz"];
+        }elseif($juego["jugadorCruz"] == $jugador && $juego["puntosCruz"] < $juego["puntosCirculo"]){
+            $juegosPerdidos = $juegosPerdidos + 1;
+        }elseif($juego["jugadorCirculo"] == $jugador && $juego["puntosCruz"] < $juego["puntosCirculo"]){
+            $juegosGanados = $juegosGanados + 1;
+            $puntosAcum = $puntosAcum + $juego["puntosCirculo"];
+        }elseif($juego["jugadorCruz"] == $jugador || $juego["jugadorCirculo"] == $jugador && $juego["puntosCruz"] = $juego["puntosCirculo"]){
+            $juegosEmpatados = $juegosEmpatados + 1;
+            $puntosAcum = $puntosAcum + 1;
+        }
+    }
+    $datosJugador = ["nombre" => $jugador, 
+    "juegosGanados" => $juegosGanados, 
+    "juegosPerdidos" => $juegosPerdidos, 
+    "juegosEmpatados" => $juegosEmpatados, 
+    "puntosAcumulados" => $puntosAcum
+    ];
+    return $datosJugador;
 }
 
 /**************************************/
