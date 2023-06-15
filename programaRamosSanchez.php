@@ -178,6 +178,24 @@ function validarSimbolo() {
     return $simbolo;
 }
 
+/** Funcion que dado la coleccion de juegos retorna la cantidad de juegos ganados, no importa quien gane.
+ * @param array $coleccionJuegos
+ * @return int
+ */
+function cantJuegosGanados($coleccionJuegos){
+    // int $cantJuegosGan, $indice, $totalJuegos, $juego
+    $cantJuegosGan = 0;
+    $indice = 0;
+    $totalJuegos = count($coleccionJuegos);
+    while ($indice <= $totalJuegos) {
+        $juego = $coleccionJuegos[$indice];
+        if (!($juego["puntosCruz"] = $juego["puntosCirculo"])) {
+            $cantJuegosGan = $cantJuegosGan + 1;
+        }
+    }
+    return $cantJuegosGan;
+}
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
