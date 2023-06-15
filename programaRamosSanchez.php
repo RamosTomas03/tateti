@@ -234,9 +234,11 @@ function cmp($coleccionJuegos){
 function coleccionJugadorO ($coleccionJuegos){
     /* array $juego */
     $juego = $coleccionJuegos;
-    uasort($juego, "cmp");
+    uasort($juego, "cmp"); 
     print_r($juego);
-
+/* La funcion "uasort" funciona para ordenar array con una funcion de comparación anteriomente desarrollada, 
+manteniendo la asociacion de los indices. 
+Y la funcion "print_r" es utilizada para mostrar el array con sus indices y elementos de forma que nosotros podamos entenderlo. */
 }
 
 /**************************************/
