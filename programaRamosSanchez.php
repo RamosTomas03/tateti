@@ -163,6 +163,21 @@ function resumenJugador($coleccionJuegos, $jugador){
     return $datosJugador;
 }
 
+/** Funcion que valida un símbolo ingresado
+  * @return string
+ */
+function validarSimbolo() {
+    $simbolo = "";
+    while ($simbolo <> "X" && $simbolo <> "O") {
+        echo "Ingrese un símbolo (X/O): ";
+        $simbolo = strtoupper(trim(fgets(STDIN)));
+        if ($simbolo <> "X" && $simbolo <> "O") {
+            echo "El símbolo ingresado no es válido. Ingrese X o O";
+        }
+    }
+    return $simbolo;
+}
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
