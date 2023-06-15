@@ -202,7 +202,8 @@ function cantJuegosGanados($coleccionJuegos){
  * @return int
  */
 function juegosGanadosSimbolo($coleccionJuegos, $simbolo){
-    // int $juegosGanadosSimbolo, $indice, $totalJuegos, $juego
+    /* int $juegosGanadosSimbolo, $indice, $totalJuegos, $juego 
+    * array $juego */
     $simboloElegido = $simbolo;
     $juegosGanadosSimbolo = 0;
     $indice = 0;
@@ -218,6 +219,25 @@ function juegosGanadosSimbolo($coleccionJuegos, $simbolo){
     return $juegosGanadosSimbolo;
 }
 
+/** Funcion de comparacion para ordenar la coleccion de juegos usando el uasort.
+ * @param array $coleccionJuegos
+ * @return string
+ */
+function cmp($coleccionJuegos){
+    /* array $juego */
+    $juego = $coleccionJuegos;
+    return strcmp($juego["jugadorCirculo"], $juego["jugadorCirculo"]);
+}
+/** Funcion que muestra en pantalla la coleccion de juegos ordenada por el nombre del jugador O.
+ * @param array $coleccionJuegos
+ */
+function coleccionJugadorO ($coleccionJuegos){
+    /* array $juego */
+    $juego = $coleccionJuegos;
+    uasort($juego, "cmp");
+    print_r($juego);
+
+}
 
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
