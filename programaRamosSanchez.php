@@ -196,6 +196,29 @@ function cantJuegosGanados($coleccionJuegos){
     return $cantJuegosGan;
 }
 
+/** función que dada una colección de juegos y un símbolo (X o O) retorne la cantidad de juegos ganados por el símbolo ingresado.
+ * @param array $coleccionJuegos
+ * @param string $simbolo
+ * @return int
+ */
+function juegosGanadosSimbolo($coleccionJuegos, $simbolo){
+    // int $juegosGanadosSimbolo, $indice, $totalJuegos, $juego
+    $simboloElegido = $simbolo;
+    $juegosGanadosSimbolo = 0;
+    $indice = 0;
+    $totalJuegos = count($coleccionJuegos);
+    while ($indice <= $totalJuegos) {
+        $juego = $coleccionJuegos[$indice];
+        if($simboloElegido = "X" && $juego["puntosCruz"] > $juego["puntosCirculo"]){
+            $juegosGanadosSimbolo = $juegosGanadosSimbolo + 1;
+        }elseif ($simboloElegido = "O" && $juego["puntosCirculo"] > $juego["puntosCruz"]) {
+            $juegosGanadosSimbolo = $juegosGanadosSimbolo + 1;
+        }
+    }
+    return $juegosGanadosSimbolo;
+}
+
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
@@ -213,8 +236,7 @@ function cantJuegosGanados($coleccionJuegos){
 //imprimirResultado($juego);
 
 
-$coleccionJuegos = cargarJuegos();
-print_r($coleccionJuegos); 
+
 /*
 do {
     $opcion = ...;
