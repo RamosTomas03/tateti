@@ -170,11 +170,10 @@ function resumenJugador($coleccionJuegos, $jugador){
  */
 function validarSimbolo() {
     $simbolo = "";
-    while ($simbolo <> "X" && $simbolo <> "O") {
+    while ($simbolo != "X" && $simbolo != "O") {
         echo "Ingrese un símbolo (X/O): ";
-        $simbolo = trim(fgets(STDIN));
-        $simbolo = strtoupper($simbolo);
-        if ($simbolo <> "X" && $simbolo <> "O") {
+        $simbolo = strtoupper(trim(fgets(STDIN)));
+        if ($simbolo != "X" && $simbolo != "O") {
             echo "El símbolo ingresado no es válido. Ingrese X o O: ";
         }
     }
@@ -186,15 +185,17 @@ function validarSimbolo() {
  * @return int
  */
 function cantJuegosGanados($coleccionJuegos){
-    // int $cantJuegosGan, $indice, $totalJuegos, $juego
+    // int $cantJuegosGan, $indice, $totalJuegos, 
+    // array $juego
     $cantJuegosGan = 0;
     $indice = 0;
     $totalJuegos = count($coleccionJuegos);
-    while ($indice <= $totalJuegos) {
+    while ($indice < $totalJuegos) {
         $juego = $coleccionJuegos[$indice];
-        if (!($juego["puntosCruz"] == $juego["puntosCirculo"])) {
+        if ($juego["puntosCruz"] != $juego["puntosCirculo"]) {
             $cantJuegosGan = $cantJuegosGan + 1;
         }
+        $indice++;
     }
     return $cantJuegosGan;
 }
@@ -212,7 +213,7 @@ function juegosGanadosSimbolo($coleccionJuegos, $simbolo){
     $juegosGanadosSimbolo = 0;
     $indice = 0;
     $totalJuegos = count($coleccionJuegos);
-    while ($indice <= $totalJuegos) {
+    while ($indice < $totalJuegos) {
         $juego = $coleccionJuegos[$indice];
         if($simboloElegido == "X" && $juego["puntosCruz"] > $juego["puntosCirculo"]){
             $juegosGanadosSimbolo = $juegosGanadosSimbolo + 1;
@@ -225,22 +226,28 @@ function juegosGanadosSimbolo($coleccionJuegos, $simbolo){
 }
 
 /** Funcion de comparacion para ordenar la coleccion de juegos usando el uasort.
- * @param array $coleccionJuegos
- * @return string
+ * @param string $a
+ * @param string $b
+ * @return int
  */
-function cmp($coleccionJuegos){
-    /* array $juego */
-    $juego = $coleccionJuegos;
-    return strcmp($juego["jugadorCirculo"], $juego["jugadorCirculo"]);
+function comparar($a, $b) {
+    // int $orden
+    if ($a["jugadorCirculo"] == $b["jugadorCirculo"]) {
+        $orden = 0;
+    }
+    elseif (($a["jugadorCirculo"] < $b["jugadorCirculo"])) {
+        $orden = -1;
+    } else {
+        $orden = 1;
+    }
+    return $orden;
 }
 /** Funcion que muestra en pantalla la coleccion de juegos ordenada por el nombre del jugador O.
  * @param array $coleccionJuegos
  */
 function coleccionJugadorO ($coleccionJuegos){
-    /* array $juego */
-    $juego = $coleccionJuegos;
-    uasort($juego, "cmp"); 
-    print_r($juego);
+    uasort($coleccionJuegos, "comparar"); 
+    print_r($coleccionJuegos);
 /* La funcion "uasort" funciona para ordenar array con una funcion de comparación anteriomente desarrollada, 
 manteniendo la asociacion de los indices. 
 Y la funcion "print_r" es utilizada para mostrar el array con sus indices y elementos de forma que nosotros podamos entenderlo. */
@@ -251,8 +258,10 @@ Y la funcion "print_r" es utilizada para mostrar el array con sus indices y elem
 /**************************************/
 
 //Declaración de variables:
-// int $opcion, $primerJuegoGanado
-// array $juego, $historialJuegos
+// int $opcion, $primerJuegoGanado, $numJuego, $todosJuegosGanados, $cantGanados
+// float $procentajeGanados
+// string $jugadorElegido, $simboloXyO
+// array $juego, $historialJuegos, $infoJugador
 
 //Inicialización de variables:
 $historialJuegos = cargarJuegos();
@@ -277,7 +286,7 @@ do {
             // 1) Jugar: 
             $juego = jugar();
             imprimirResultado($juego);
-            
+            $historialJuegos = agregarJuego($historialJuegos, $juego);
             break;
         case 2: 
             // 2) Mostrar un juego: 
@@ -286,23 +295,45 @@ do {
             datosDeUnJuego($historialJuegos, $numeroJuego);
             break;
         case 3:
+            // 3) Mostrar el primer juego ganador: 
             echo "ingrese el nombre del jugador: ";
-            $jugadorElegido = trim(fgets(STDIN));
-            $jugadorElegido = strtoupper($jugadorElegido);
+            $jugadorElegido = strtoupper(trim(fgets(STDIN))); 
+            //strtoupper hace que todo lo que esté escrito en una variable string, lo transcriba en mayúsculas.
             $primerJuegoGanado = buscarJuegoGanado($historialJuegos , $jugadorElegido);
             datosDeUnJuego($historialJuegos, $primerJuegoGanado+1);
             break;
         case 4: 
-            
-    
+            // 4) Mostrar porcentaje de juegos ganados: 
+            $simboloXyO = validarSimbolo();
+            $todosJuegosGanados = cantJuegosGanados($historialJuegos);
+            $cantGanados = juegosGanadosSimbolo($historialJuegos, $simboloXyO);
+            $porcentajeGanados = ($cantGanados*100)/$todosJuegosGanados;
+            echo "El porcentaje de juegos ganados por ", $simboloXyO, " es del ", $porcentajeGanados, "%.\n";
             break;
         case 5: 
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
-       
-               break;
+            //5) Mostrar resumen de Jugador: 
+            echo "ingrese el nombre de un jugador: ";
+            $jugadorElegido = strtoupper(trim(fgets(STDIN)));
+            $infoJugador = resumenJugador($historialJuegos, $jugadorElegido);
+            if ($infoJugador["juegosPerdidos"] == 0 && $infoJugador["puntosAcumulados"] == 0) {
+                echo "El jugador ", $jugadorElegido, " no jugó ningún juego aún.\n";
+            }else {
+                echo "*************************************\n";
+                echo "Jugador: ", $infoJugador["nombre"], "\n";
+                echo "Ganó: ", $infoJugador["juegosGanados"], " juegos\n";
+                echo "Perdió: ", $infoJugador["juegosPerdidos"], " juegos\n";
+                echo "Empató ", $infoJugador["juegosEmpatados"], " juegos\n";
+                echo "Total de puntos acumulados: ", $infoJugador["puntosAcumulados"], " puntos\n";
+                echo "*************************************\n";
+            }
+            break;
         case 6: 
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
-    
+            // 6) Mostrar listado de juegos Ordenado por jugador O: 
+            coleccionJugadorO($historialJuegos);
+            break;
+        case 7:
+            // 7) Salir:
+            echo "Programa finalizado... ";
             break;
     }
 } while ($opcion != 7);
