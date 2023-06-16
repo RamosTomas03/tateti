@@ -298,7 +298,7 @@ do {
             // 3) Mostrar el primer juego ganador: 
             echo "ingrese el nombre del jugador: ";
             $jugadorElegido = strtoupper(trim(fgets(STDIN))); 
-            //strtoupper hace que todo lo que esté escrito en una variable string, lo transcriba en mayúsculas.
+            //strtoupper hace que todo lo que esté escrito en una variable string, lo transcriba en mayúscula.
             $primerJuegoGanado = buscarJuegoGanado($historialJuegos , $jugadorElegido);
             datosDeUnJuego($historialJuegos, $primerJuegoGanado+1);
             break;
