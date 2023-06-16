@@ -104,23 +104,23 @@ function agregarJuego ($coleccionJuegos, $nuevoJuego){
  * @return int
 */
 function buscarJuegoGanado($coleccionJuegos, $jugador) {
-    /* int $indice, $totalJuegos, $juegoGanado
-     * array $juego
-     */
-    $juego = [];
+    // int $indice, $totalJuegos, $juegoGanado, 
+    // array $juego
+    // boolean $esGanador
+    $esGanador = false;
     $indice = 0;
     $totalJuegos = count($coleccionJuegos);
     $juegoGanado = -1;
-    
-    while ($indice <= $totalJuegos) {
+    while ($indice < $totalJuegos && $esGanador != true) {
         $juego = $coleccionJuegos[$indice];
-        
-        if (($juego["jugadorCruz"] == $jugador && $juego["puntosCruz"] > $juego["puntosCirculo"]) ||
-            ($juego["jugadorCirculo"] == $jugador && $juego["puntosCirculo"] > $juego["puntosCruz"])) {
+        if ($juego["jugadorCruz"] == $jugador && $juego["puntosCruz"] > $juego["puntosCirculo"]) {
             $juegoGanado = $indice;
+            $esGanador = true;
+        }elseif ($juego["jugadorCirculo"] == $jugador && $juego["puntosCirculo"] > $juego["puntosCruz"]) {
+            $juegoGanado = $indice;
+            $esGanador = true;
         }
-        
-        $indice+1;
+        $indice = $indice +1;
     }
     
     return $juegoGanado;
@@ -256,41 +256,52 @@ Y la funcion "print_r" es utilizada para mostrar el array con sus indices y elem
 
 //Inicialización de variables:
 $historialJuegos = cargarJuegos();
+$separador = "\n\n+++++++++++++++++++++++++++++++++\n\n";
 
 //Proceso:
 
-do {
-    $opcion = seleccionarOpcion();
 
+//print_r($juego);
+//imprimirResultado($juego);
+
+
+
+
+do {
+
+    echo $separador;
+    $opcion = seleccionarOpcion();
     
     switch ($opcion) {
         case 1: 
+            // 1) Jugar: 
             $juego = jugar();
             imprimirResultado($juego);
-            $historialJuegos = agregarJuego($historialJuegos, $juego);
+            
             break;
         case 2: 
+            // 2) Mostrar un juego: 
             echo "ingrese el número del juego que quiere ver: ";
-            $numeroJuego = trim(fgets(STDIN));
+            $numeroJuego = solicitarNumeroEntre(0, count($historialJuegos));
             datosDeUnJuego($historialJuegos, $numeroJuego);
             break;
-        case 3: 
+        case 3:
             echo "ingrese el nombre del jugador: ";
             $jugadorElegido = trim(fgets(STDIN));
             $jugadorElegido = strtoupper($jugadorElegido);
-            $primerJuegoGanado = buscarJuegoGanado($historialJuegos, $jugadorElegido);
-            datosDeUnJuego($historialJuegos, $primerJuegoGanado);
+            $primerJuegoGanado = buscarJuegoGanado($historialJuegos , $jugadorElegido);
+            datosDeUnJuego($historialJuegos, $primerJuegoGanado+1);
             break;
         case 4: 
-             //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
+            
     
             break;
         case 5: 
-                //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
+            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
        
                break;
         case 6: 
-             //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
+            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
     
             break;
     }
