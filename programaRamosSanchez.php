@@ -19,16 +19,16 @@ include_once("tateti.php");
  */
     function cargarJuegos (){
         /* array $coleccionJuegos */
-        $coleccionJuegos[0] = ["jugadorCruz"=>"Majo", "jugadorCirculo"=>"Pepe", "puntosCruz"=>5, "puntosCirculo"=>0];
-        $coleccionJuegos[1] = ["jugadorCruz"=>"Juan", "jugadorCirculo"=>"Majo", "puntosCruz"=>1, "puntosCirculo"=>1];
-        $coleccionJuegos[2] = ["jugadorCruz"=>"Ana", "jugadorCirculo"=>"Lisa", "puntosCruz"=>1, "puntosCirculo"=>1];
-        $coleccionJuegos[3] = ["jugadorCruz"=>"Majo", "jugadorCirculo"=>"Tomas", "puntosCruz"=>4, "puntosCirculo"=>0];
-        $coleccionJuegos[4] = ["jugadorCruz"=>"Ana", "jugadorCirculo"=>"Juan", "puntosCruz"=>0, "puntosCirculo"=>5];
-        $coleccionJuegos[5] = ["jugadorCruz"=>"Pepe", "jugadorCirculo"=>"Lisa", "puntosCruz"=>1, "puntosCirculo"=>1];
-        $coleccionJuegos[6] = ["jugadorCruz"=>"Majo", "jugadorCirculo"=>"Ana", "puntosCruz"=>0, "puntosCirculo"=>3];
-        $coleccionJuegos[7] = ["jugadorCruz"=>"Juan", "jugadorCirculo"=>"Tomas", "puntosCruz"=>0, "puntosCirculo"=>4];
-        $coleccionJuegos[8] = ["jugadorCruz"=>"Lisa", "jugadorCirculo"=>"Ana", "puntosCruz"=>1, "puntosCirculo"=>1];
-        $coleccionJuegos[9] = ["jugadorCruz"=>"Pepe", "jugadorCirculo"=>"Lucas", "puntosCruz"=>3, "puntosCirculo"=>0];
+        $coleccionJuegos[0] = ["jugadorCruz"=>"MAJO", "jugadorCirculo"=>"PEPE", "puntosCruz"=>5, "puntosCirculo"=>0];
+        $coleccionJuegos[1] = ["jugadorCruz"=>"JUAN", "jugadorCirculo"=>"MAJO", "puntosCruz"=>1, "puntosCirculo"=>1];
+        $coleccionJuegos[2] = ["jugadorCruz"=>"ANA", "jugadorCirculo"=>"LISA", "puntosCruz"=>1, "puntosCirculo"=>1];
+        $coleccionJuegos[3] = ["jugadorCruz"=>"MAJO", "jugadorCirculo"=>"TOMAS", "puntosCruz"=>4, "puntosCirculo"=>0];
+        $coleccionJuegos[4] = ["jugadorCruz"=>"ANA", "jugadorCirculo"=>"JUAN", "puntosCruz"=>0, "puntosCirculo"=>5];
+        $coleccionJuegos[5] = ["jugadorCruz"=>"PEPE", "jugadorCirculo"=>"LISA", "puntosCruz"=>1, "puntosCirculo"=>1];
+        $coleccionJuegos[6] = ["jugadorCruz"=>"MAJO", "jugadorCirculo"=>"ANA", "puntosCruz"=>0, "puntosCirculo"=>3];
+        $coleccionJuegos[7] = ["jugadorCruz"=>"JUAN", "jugadorCirculo"=>"TOMAS", "puntosCruz"=>0, "puntosCirculo"=>4];
+        $coleccionJuegos[8] = ["jugadorCruz"=>"LISA", "jugadorCirculo"=>"ANA", "puntosCruz"=>1, "puntosCirculo"=>1];
+        $coleccionJuegos[9] = ["jugadorCruz"=>"PEPE", "jugadorCirculo"=>"LUCAS", "puntosCruz"=>3, "puntosCirculo"=>0];
         return $coleccionJuegos;
     }
 
@@ -67,9 +67,10 @@ function seleccionarOpcion(){
  * @param int $nroJuego
 */
 function datosDeUnJuego ($coleccionJuegos, $nroJuego){
-    /* array $juegoElegido */
-    $nroJuego = solicitarNumeroEntre(-1, count($coleccionJuegos));
-    $juegoElegido=$coleccionJuegos[$nroJuego-1];
+    /* array $juegoElegido 
+    * int $nroIndice */
+    $nroIndice = $nroJuego -1;
+    $juegoElegido = $coleccionJuegos[$nroIndice];
     echo "**********************\n";
     if($juegoElegido["puntosCruz"] > $juegoElegido["puntosCirculo"]){
         echo "Juego TATETI: ", $nroJuego, "(gano X)\n";
@@ -106,6 +107,7 @@ function buscarJuegoGanado($coleccionJuegos, $jugador) {
     /* int $indice, $totalJuegos, $juegoGanado
      * array $juego
      */
+    $juego = [];
     $indice = 0;
     $totalJuegos = count($coleccionJuegos);
     $juegoGanado = -1;
@@ -170,7 +172,8 @@ function validarSimbolo() {
     $simbolo = "";
     while ($simbolo <> "X" && $simbolo <> "O") {
         echo "Ingrese un símbolo (X/O): ";
-        $simbolo = strtoupper(trim(fgets(STDIN)));
+        $simbolo = trim(fgets(STDIN));
+        $simbolo = strtoupper($simbolo);
         if ($simbolo <> "X" && $simbolo <> "O") {
             echo "El símbolo ingresado no es válido. Ingrese X o O: ";
         }
@@ -248,11 +251,10 @@ Y la funcion "print_r" es utilizada para mostrar el array con sus indices y elem
 /**************************************/
 
 //Declaración de variables:
-// int $opcion, $nroElegido
+// int $opcion, $primerJuegoGanado
 // array $juego, $historialJuegos
 
 //Inicialización de variables:
-$juego = [];
 $historialJuegos = cargarJuegos();
 
 //Proceso:
@@ -264,16 +266,20 @@ do {
     switch ($opcion) {
         case 1: 
             $juego = jugar();
+            imprimirResultado($juego);
             $historialJuegos = agregarJuego($historialJuegos, $juego);
             break;
         case 2: 
             echo "ingrese el número del juego que quiere ver: ";
-            $nroElegido = trim(fgets(STDIN));
-            datosDeUnJuego($historialJuegos, $nroElegido);
+            $numeroJuego = trim(fgets(STDIN));
+            datosDeUnJuego($historialJuegos, $numeroJuego);
             break;
         case 3: 
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
-
+            echo "ingrese el nombre del jugador: ";
+            $jugadorElegido = trim(fgets(STDIN));
+            $jugadorElegido = strtoupper($jugadorElegido);
+            $primerJuegoGanado = buscarJuegoGanado($historialJuegos, $jugadorElegido);
+            datosDeUnJuego($historialJuegos, $primerJuegoGanado);
             break;
         case 4: 
              //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
