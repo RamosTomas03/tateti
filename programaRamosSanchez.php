@@ -39,13 +39,13 @@ include_once("tateti.php");
 function seleccionarOpcion(){
     /* int $opcionElegida */
     echo "1. Jugar al tatetí \n
-    2. Mostrar un juego \n
-    3. Mostrar el primer juego ganado \n
-    4. Mostrar porcentaje de juegos ganados \n
-    5. Mostrar resumen de jugador \n
-    6. Mostrar listado de juegos ordenado por jugador O \n
-    7. Salir \n";
-    echo "Selecione una opción: ";
+2. Mostrar un juego \n
+3. Mostrar el primer juego ganado \n
+4. Mostrar porcentaje de juegos ganados \n
+5. Mostrar resumen de jugador \n
+6. Mostrar listado de juegos ordenado por jugador O \n
+7. Salir \n";
+    echo "\n Selecione una opción: ";
     $opcionElegida = trim(fgets(STDIN));
     if ($opcionElegida < 0 && $opcionElegida > 8){
        echo "La opcion elegida no es valida.";
@@ -99,7 +99,7 @@ function agregarJuego ($coleccionJuegos, $nuevoJuego){
 
 /** Funcion que busca el primer juego ganado por un determinado jugador
  * @param array $coleccionJuegos
- * @param array $jugador
+ * @param string $jugador
  * @return int
 */
 function buscarJuegoGanado($coleccionJuegos, $jugador) {
@@ -172,7 +172,7 @@ function validarSimbolo() {
         echo "Ingrese un símbolo (X/O): ";
         $simbolo = strtoupper(trim(fgets(STDIN)));
         if ($simbolo <> "X" && $simbolo <> "O") {
-            echo "El símbolo ingresado no es válido. Ingrese X o O";
+            echo "El símbolo ingresado no es válido. Ingrese X o O: ";
         }
     }
     return $simbolo;
@@ -189,7 +189,7 @@ function cantJuegosGanados($coleccionJuegos){
     $totalJuegos = count($coleccionJuegos);
     while ($indice <= $totalJuegos) {
         $juego = $coleccionJuegos[$indice];
-        if (!($juego["puntosCruz"] = $juego["puntosCirculo"])) {
+        if (!($juego["puntosCruz"] == $juego["puntosCirculo"])) {
             $cantJuegosGan = $cantJuegosGan + 1;
         }
     }
@@ -203,18 +203,20 @@ function cantJuegosGanados($coleccionJuegos){
  */
 function juegosGanadosSimbolo($coleccionJuegos, $simbolo){
     /* int $juegosGanadosSimbolo, $indice, $totalJuegos, $juego 
-    * array $juego */
+    * array $juego
+    * string $simboloElegido */
     $simboloElegido = $simbolo;
     $juegosGanadosSimbolo = 0;
     $indice = 0;
     $totalJuegos = count($coleccionJuegos);
     while ($indice <= $totalJuegos) {
         $juego = $coleccionJuegos[$indice];
-        if($simboloElegido = "X" && $juego["puntosCruz"] > $juego["puntosCirculo"]){
+        if($simboloElegido == "X" && $juego["puntosCruz"] > $juego["puntosCirculo"]){
             $juegosGanadosSimbolo = $juegosGanadosSimbolo + 1;
-        }elseif ($simboloElegido = "O" && $juego["puntosCirculo"] > $juego["puntosCruz"]) {
+        }elseif ($simboloElegido == "O" && $juego["puntosCirculo"] > $juego["puntosCruz"]) {
             $juegosGanadosSimbolo = $juegosGanadosSimbolo + 1;
         }
+        $indice++;
     }
     return $juegosGanadosSimbolo;
 }
@@ -246,39 +248,45 @@ Y la funcion "print_r" es utilizada para mostrar el array con sus indices y elem
 /**************************************/
 
 //Declaración de variables:
-
+// int $opcion, $nroElegido
+// array $juego, $historialJuegos
 
 //Inicialización de variables:
-
+$juego = [];
+$historialJuegos = cargarJuegos();
 
 //Proceso:
 
-
-//print_r($juego);
-//imprimirResultado($juego);
-
-
-
-/*
 do {
-    $opcion = ...;
+    $opcion = seleccionarOpcion();
 
     
     switch ($opcion) {
         case 1: 
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 1
-
+            $juego = jugar();
+            $historialJuegos = agregarJuego($historialJuegos, $juego);
             break;
         case 2: 
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 2
-
+            echo "ingrese el número del juego que quiere ver: ";
+            $nroElegido = trim(fgets(STDIN));
+            datosDeUnJuego($historialJuegos, $nroElegido);
             break;
         case 3: 
             //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
 
             break;
-        
-            //...
+        case 4: 
+             //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
+    
+            break;
+        case 5: 
+                //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
+       
+               break;
+        case 6: 
+             //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
+    
+            break;
     }
-} while ($opcion != X);
-*/
+} while ($opcion != 7);
+
