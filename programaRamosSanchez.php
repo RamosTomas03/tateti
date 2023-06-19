@@ -122,7 +122,7 @@ function buscarJuegoGanado($coleccionJuegos, $jugador) {
         }
         $indice = $indice +1;
     }
-    
+    //La funcion retorna -1 si el jugador elegido no ganó ningun juego
     return $juegoGanado;
 }
 
