@@ -313,13 +313,26 @@ do {
             datosDeUnJuego($historialJuegos, $numeroJuego);
             break;
         case 3:
-            // 3) Mostrar el primer juego ganador: 
-            echo "ingrese el nombre del jugador: ";
-            $jugadorElegido = strtoupper(trim(fgets(STDIN))); 
-            //strtoupper hace que todo lo que esté escrito en una variable string, lo transcriba en mayúscula.
-            $primerJuegoGanado = buscarJuegoGanado($historialJuegos , $jugadorElegido);
-            datosDeUnJuego($historialJuegos, $primerJuegoGanado+1);
+        echo "Ingrese el nombre del jugador: ";
+        $jugadorElegido = strtoupper(trim(fgets(STDIN)));
+        $i = 0;
+        $encontrado = false;
+        while ($i < count($historialJuegos)) {
+        $juego = $historialJuegos[$i];
+        if ($juego["jugadorCruz"] == $jugadorElegido || $juego["jugadorCirculo"] == $jugadorElegido) {
+            $encontrado = true;
             break;
+        }
+        $i++;
+        }
+
+        if ($encontrado == true) {
+        $primerJuegoGanado = buscarJuegoGanado($historialJuegos, $jugadorElegido);
+        datosDeUnJuego($historialJuegos, $primerJuegoGanado + 1);
+        } else {
+        echo "Nombre de jugador inválido o no existe. Intente nuevamente.\n";
+        }
+        break;
         case 4: 
             // 4) Mostrar porcentaje de juegos ganados: 
             $simboloXyO = validarSimbolo();
