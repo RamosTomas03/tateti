@@ -138,7 +138,7 @@ function buscarJuegoGanado($coleccionJuegos, $jugador) {
         }
         $indice = $indice +1;
     }
-    
+    //La funcion retorna -1 si el jugador elegido no ganó ningun juego
     return $juegoGanado;
 }
 
@@ -167,6 +167,8 @@ function resumenJugador($coleccionJuegos, $jugador){
         }elseif($juego["jugadorCirculo"] == $jugador && $juego["puntosCruz"] < $juego["puntosCirculo"]){
             $juegosGanados = $juegosGanados + 1;
             $puntosAcum = $puntosAcum + $juego["puntosCirculo"];
+        }elseif($juego["jugadorCirculo"] == $jugador && $juego["puntosCruz"] > $juego["puntosCirculo"]){
+            $juegosPerdidos = $juegosPerdidos + 1;
         }elseif($juego["jugadorCruz"] == $jugador || $juego["jugadorCirculo"] == $jugador && $juego["puntosCruz"] = $juego["puntosCirculo"]){
             $juegosEmpatados = $juegosEmpatados + 1;
             $puntosAcum = $puntosAcum + 1;
